@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Login</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../GWISHBOI WEB/gallery.css" >
+        <link href="../GWISHBOI WEB/login2.css" rel="stylesheet">
+        
+    </head>
+    
+ <body>
+    <div id="preloader"></div>
+
+        <section>
+            <ul>
+                <li><a href="../GWISHBOI WEB/index.html">HOME</a></li>
+                <li><a href="../GWISHBOI WEB/gallery.html">GALLERY</a></li>
+                <li><a href="../GWISHBOI WEB/about2.html">ABOUT</a></li>
+                <li><a href="../GWISHBOI WEB/service.html">SERVICES</a></li>
+                <li><a href="../GWISHBOI WEB/contact.html">CONTACT</a></li>
+                <li><a href="../GWISHBOI WEB/login2.html"><button>LOGIN</button></a></li>
+            </ul>
+        </section>
+
+
+    <section>
+        <form action="login.php">
+        <div class="login-box">
+            <div class="left-box">
+                
+                <h3>Sign Up</h3>
+                <input type="username" class="input-box" placeholder="UserName" required>
+                <input type="email" class="input-box" placeholder="email" required>
+                <input type="password" class="input-box" placeholder="Enter password" required>
+                <input type="password" class="input-box" placeholder="Confirm password" required>
+                <input type="submit" class="submit-btn" value="Sign in">
+            </div>
+        </form>
+            
+        <!--TRY REMOVING THIS DIV-->
+        <div class="right-box">
+            <span class="right-title">Sign Up with <br>Social Network</span>
+
+       <button class="social facebook">Login with Facebook</button>
+       <button class="social twitter">Login with twitter</button>
+       <button class="social google">Login with Google+</button>
+      </div>
+      <div class="or">
+         OR
+      </div>
+     </div>
+    </section>
+    
+    
+        
+    <script>
+        var loader = document.getElementById("preloader");
+        window.addEventListener("load", function(){
+               loader.style.display ="none"
+        })
+        </script>
+
+     <footer>       
+         <p><marquee>New users feel free to expore our cool services in this interactive website @Gwishboi.com and take note that your information is safe with us.To keep in touch with us go to or contact section. All Rights Reserved (2022)</marquee><p>      
+     </footer>
+            <!---TRY INSERTING A CLOSING DIV HERE-->
+    </body>
+</html>
