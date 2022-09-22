@@ -1,2 +1,0 @@
-# gwishboi.com
-MY WEB
