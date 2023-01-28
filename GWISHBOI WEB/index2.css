@@ -22,7 +22,7 @@ nav{
 
 }
 .logo{
-    color: white;
+    color: rgb(23, 1, 1);
     font-size: 35px;
     letter-spacing: 1px;
     cursor: pointer;
@@ -38,7 +38,7 @@ nav ul li{
     padding: 10px 25px;
 }
 nav ul li a{
-    color: white;
+    color: rgb(11, 1, 1);
     text-decoration: none;
     font-weight: bold;
     text-transform: capitalize;
@@ -68,18 +68,20 @@ nav ul li a:hover{
     transform: translateY(-50%);
 }
 h1{
-    color: white;
+    color: rgb(47, 2, 2);
     margin: 20px 0px 20px;
     font-size: 75px;
 
 }
+
 h3{
-    color: white;
+    color: rgb(3, 84, 65);
     font-size: 25px;
     margin-bottom: 50px;
 }
 h4{
-    color: #fcfc;
+    color:  rgb(47, 2, 2);
+
     letter-spacing: 2px;
     font-size: 20px;
     
