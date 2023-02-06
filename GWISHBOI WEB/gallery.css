@@ -314,3 +314,321 @@ auto
 auto;
 }
 
+@media onlyscreen and(max-width: 800px)
+{
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+ul{
+    font-family: arial;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #1a1a1a;
+}
+
+li{
+    float:left;
+    }
+
+li a{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+}
+
+li a:hover{
+    background-color: #000000;
+}
+
+footer{
+    background-color: #1a1a1a;
+    bottom: 0;
+    width: 100%;
+    padding: 3px;
+    position: fixed;
+}
+
+h2{
+    color: white;
+    font-family: arial;
+    text-align: center;
+    font-size: 20pt;
+    font-weight: lighter;
+
+}
+
+#img-gal{
+    height: 200px;
+   padding: 50px;
+   
+}
+#img-gal:hover{
+    -webkit-text-stroke:2px #fff;
+    transition: transform 0.5s;    
+    transform:translateY(-10px);
+    border-radius:10px;
+     
+
+}
+
+button{
+    cursor: pointer;
+}
+
+.row
+{
+display:flex;
+height:88%;
+align-items: center;
+}
+.col
+{
+flex-basis: 50%;
+}
+h1
+{
+color:#fff;
+font-size:100px;
+transition: 0.5s;
+}
+
+h1:hover{
+    -webkit-text-stroke:2px #fff;
+    color: transparent;
+    cursor: pointer;
+}
+
+p
+{
+color:#fff;
+font-size:12px;
+line-height:15px;
+text-align: center;
+}
+#btn
+{
+width:180px;
+color:#000;
+font-size:11px;
+padding:12px 0;
+background:#fff;
+border:0;
+border-radius:20px;
+outline:none;
+margin-top:30px;
+
+}
+.card
+{
+/*padding:15px 25px*/
+height:230px;
+width:200px;
+padding:15px 25px;
+display:inline-block;
+border-radius:10px;
+box-sizing: border-box;
+cursor:pointer;
+margin: 10px;
+/*margin:10px 15px;*/
+background-position:center;
+background-size:cover;
+transition: transform 0.5s;
+
+}
+
+.card1
+{
+
+background-image: url("../GWISHBOI WEB/10.jpg");
+}
+.card2
+{
+background-image: url("../GWISHBOI WEB/11.jpg");
+}
+.card3
+{
+background-image: url("../GWISHBOI WEB/12.jpg");
+}
+.card4
+{
+background-image: url("../GWISHBOI WEB/13.jpg");
+
+}
+.card:hover
+{
+transform:translateY(-10px);
+}
+h5
+{
+color:#fff;
+text-shadow:0, 0 ,5px #999;
+text-align: center;
+
+}
+.card p
+{
+text-shadow:0, 0, 5px #000;
+font-size:8px;
+}
+
+#preloader{
+background:#000 url("../GWISHBOI WEB/loader.gif") no-repeat center center ;
+background-size:30%;
+height:100vh ;
+width: 100%;
+position: fixed;
+z-index: 100;
+
+}
+
+/* PLAY VIDEO IN BACKGROUND TO BE VALIDATED */
+/* .back-video{
+    position:absolute;
+    right:0;
+    bottom:0;
+    z-index:-1;
+}
+
+@media(min-aspect-ratio:16/9)
+{
+    .back-video
+    {
+        width:100%;
+        height:auto;
+    }
+}
+
+@media(min-aspect-ratio:16/9)
+{
+    .back-video
+    {
+        width:auto;
+        height:100%;
+    }
+}
+ 
+
+
+/*
+.container-box{
+      background:#000;
+      height:200vh;
+      color:#fff;
+}
+h6{
+    text-align:center;
+    padding-top: 100px;
+}
+h6::after{
+    content:'';
+    background:#008000;
+    display:block;
+    height:3px;
+    width:170px;
+    margin:20px auto 50px;
+}
+.service .icon{
+    font-size: 30px;
+    margin:20px auto;
+    padding:18px solid #008000;
+    border-radius:50%;
+    color:#008000;
+}
+.service p{
+    font-size:15px;
+    margin-top:10px;
+    color:#fff;
+    padding:20px;
+}
+.service span{
+    color:#008000;
+    transition:.5s;
+}
+.service .col-md-3:hover{
+    background:linear-gradient(rgba(0,0,0,0.5),#008000);
+    cursor:pointer;
+    color:#000;
+    box-shadow:-5px 5px 10px 0 rgba(0,0,0,0.4);
+    transition:.5s;
+}
+*/
+
+.bubbles img{
+    width: 50px;
+    animation: bubble 7s linear infinite;
+}
+.bubbles{
+ width: 100%;
+ display:flex;
+ align-items: center;
+ justify-content: space-around;
+ position: absolute;
+ bottom: -70px;
+
+}
+@keyframes  bubble    {
+       0% {
+ transform: translateY(0);
+ opacity: 0;
+ }
+        50% {
+     
+            opacity: 1;
+         }
+       70% {
+             
+             opacity: 1;
+             }
+             100% {
+                 transform: translateY(-80vh);
+                 opacity: 0;
+              }
+}
+
+.bubbles img:nth-child(1){
+ animation-delay: 2s;
+ width: 25px;
+}
+
+.bubbles img:nth-child(2){
+ animation-delay: 1s;
+}
+.bubbles img:nth-child(3){
+ animation-delay: 3s;
+ width: 25px;
+}
+.bubbles img:nth-child(4){
+ animation-delay: 4.5s;
+
+}
+.bubbles img:nth-child(5){
+ animation-delay: 3s;
+ width: 20px;
+}
+.bubbles img:nth-child(6){
+ animation-delay: 6s;
+}
+.bubbles img:nth-child(7){
+ animation-delay: 7s;
+ width: 35px;
+}
+
+.main{
+min-height:100vh;
+min-height:100dvh;
+ 
+display:grid;
+grid-template-rows:
+auto
+1fr
+auto;
+}
+}
