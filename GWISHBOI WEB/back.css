@@ -38,3 +38,91 @@ auto;
 .our{
     place-items:center;
 }
+
+
+@media onlyscreen and(max-width: 400px)
+{
+body{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: #777;
+    font-family: sans-serif;
+    background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url("https://wallpaperboat.com/wp-content/uploads/2021/04/12/74672/welcome-18.jpg");
+    background-position: center;
+    background-size: cover;
+    font-weight: 300;
+    
+}
+#gallery
+{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: #777;
+    font-family: sans-serif;
+    background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url("../GWISHBOI WEB/pexel.jpg");
+    background-position: center;
+    background-size: cover;
+    font-weight: 300;
+    
+}
+
+.main{
+min-height:100vh;
+min-height:100dvh;
+ 
+display:grid;
+grid-template-rows:
+auto
+1fr
+auto;
+}
+
+.our{
+    place-items:center;
+}
+
+}
+@media onlyscreen and(max-width:800px){
+ body{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: #777;
+    font-family: sans-serif;
+    background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url("https://wallpaperboat.com/wp-content/uploads/2021/04/12/74672/welcome-18.jpg");
+    background-position: center;
+    background-size: cover;
+    font-weight: 300;
+    
+}
+#gallery
+{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    color: #777;
+    font-family: sans-serif;
+    background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url("../GWISHBOI WEB/pexel.jpg");
+    background-position: center;
+    background-size: cover;
+    font-weight: 300;
+    
+}
+
+.main{
+min-height:100vh;
+min-height:100dvh;
+ 
+display:grid;
+grid-template-rows:
+auto
+1fr
+auto;
+}
+
+.our{
+    place-items:center;
+}   
+}
