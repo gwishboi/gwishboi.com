@@ -1,13 +1,20 @@
+
 body{
+}
+
+
+
+
+body{
+    
+    font-family: system-ui;
+    font-size: 1.25rem;
+    line-height: 1.5;
     margin: 0;
-    padding: 0;
-    font-size: 16px;
     color: #777;
-    font-family: sans-serif;
     background-image: linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url("https://wallpaperboat.com/wp-content/uploads/2021/04/12/74672/welcome-18.jpg");
     background-position: center;
     background-size: cover;
-    font-weight: 300;
     
 }
 #gallery
