@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>Verbum & Vox Fashions</title>
+	<style>
+		:root{--bg:#07111f;--card:#101a2b;--accent:#ff5f7d;--muted:#9fb0c4;--text:#f5f7fb;--border:#22304a}
+		body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(135deg,#07111f 0%,#111d33 100%);color:var(--text);margin:0}
+		header{background:rgba(16,26,43,.95);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,.25);backdrop-filter:blur(8px)}
+		.brand{font-weight:800;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;font-size:1rem}
+		.controls{display:flex;gap:10px;align-items:center}
+		main{padding:18px;max-width:1100px;margin:18px auto}
+		.grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+		.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+		.card{background:var(--card);padding:12px;border-radius:10px;box-shadow:0 10px 25px rgba(0,0,0,.2);border:1px solid var(--border)}
+		.card img{width:100%;height:180px;object-fit:cover;border-radius:6px}
+		.price{color:var(--accent);font-weight:700}
+		.muted{color:var(--muted);font-size:13px}
+		.cart{background:var(--card);padding:12px;border-radius:10px;height:fit-content;border:1px solid var(--border)}
+		.cart-list{max-height:320px;overflow:auto;margin:8px 0}
+		button{background:var(--accent);color:#fff;border:0;padding:8px 10px;border-radius:6px;cursor:pointer;font-weight:600}
+		.chip{background:#172338;padding:6px 8px;border-radius:14px;border:1px solid var(--border);color:var(--text)}
+		footer{padding:12px;text-align:center;color:#8ca0bb;font-size:13px}
+		.filters{display:flex;gap:8px}
+		input,select{padding:8px;border-radius:6px;border:1px solid var(--border);background:#172338;color:var(--text)}
+		.checkout-panel{margin-top:12px;border-top:1px solid var(--border);padding-top:12px;display:none}
+		.checkout-panel form{display:grid;gap:8px}
+		.checkout-panel label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+		.checkout-panel input{width:100%;box-sizing:border-box}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="brand">Verbum &amp; Vox Fashions</div>
+		<div class="controls">
+			<div class="filters">
+				<select id="genderFilter"><option value="all">All</option><option value="women">Women</option><option value="men">Men</option></select>
+				<input id="search" placeholder="Search products..." />
+			</div>
+			<div class="chip" id="userChip">Guest</div>
+			<button id="loginBtn">Sign in</button>
+			<button id="viewCart">Cart (<span id="cartCount">0</span>)</button>
+		</div>
+	</header>
+	<main>
+		<div class="grid">
+			<div>
+				<section class="card">
+					<h3>Contemporary Style for Every Season</h3>
+					<p class="muted">Curated picks for the season. Click a product to add to cart.</p>
+				</section>
+
+				<section class="products" id="products"></section>
+			</div>
+
+			<aside class="cart" id="cartPane">
+				<h4>Shopping Cart</h4>
+				<div class="cart-list" id="cartList"></div>
+				<div class="muted">Total: $<span id="cartTotal">0.00</span></div>
+				<div style="margin-top:10px;display:flex;gap:8px"><button id="checkout">Checkout</button><button id="clearCart" style="background:#eee;color:#111">Clear</button></div>
+				<div id="checkoutPanel" class="checkout-panel">
+					<h5 style="margin:0 0 8px">Delivery & Payment</h5>
+					<form id="checkoutForm">
+						<label>Name<input type="text" id="custName" name="custName" required></label>
+						<label>Email<input type="email" id="custEmail" name="custEmail" required></label>
+						<label>Phone<input type="tel" id="custPhone" name="custPhone" required></label>
+						<label>Address<input type="text" id="custAddress" name="custAddress" required></label>
+						<label>Card Number<input type="text" id="cardNumber" name="cardNumber" inputmode="numeric" required></label>
+						<label>Expiry<input type="text" id="cardExpiry" name="cardExpiry" placeholder="MM/YY" required></label>
+						<label>CVV<input type="password" id="cardCvv" name="cardCvv" inputmode="numeric" required></label>
+						<div style="display:flex;gap:8px;margin-top:4px">
+							<button type="submit">Place Order</button>
+							<button type="button" id="cancelCheckout" style="background:#eee;color:#111">Cancel</button>
+						</div>
+					</form>
+				</div>
+			</aside>
+		</div>
+	</main>
+	<footer>Built as a starter storefront — Verbum &amp; Vox Fashions</footer>
+
+	<script>
+		const CART_KEY = 'vv_cart_v1'
+		const catalog = generateCatalog(100)
+		const orders = []
+
+		function generateCatalog(count){
+			const genders = ['women','men','unisex']
+			const categories = ['outerwear','tops','bottoms','dresses','knitwear','accessories','footwear','sets']
+			const adjectives = ['Luxe','Modern','Essential','Studio','Urban','Velvet','Sculptural','Minimal','Signature','Contour']
+			const categoryNames = {
+				outerwear: ['Tailored Coat','Quilted Jacket','Bomber Jacket','Trench Coat','Wool Overcoat','Puffer Coat','Overshirt','Blazer'],
+				tops: ['Silk Shirt','Cotton Tee','Button-Up Shirt','Cropped Top','Linen Shirt','Wrap Top','Polo Shirt','Tank Top'],
+				bottoms: ['Tailored Trousers','Wide-Leg Pants','Denim Jeans','Relaxed Chinos','Culottes','Skirt','Mini Skirt','Slip Skirt'],
+				dresses: ['Slip Dress','Midi Dress','Wrap Dress','Satin Dress','Maxi Dress','Shirt Dress','A-Line Dress','Cutout Dress'],
+				knitwear: ['Knit Sweater','Cardigan','Pullover','Crewneck','Cable Knit','Ribbed Knit','Turtle Neck','Marl Sweater'],
+				accessories: ['Leather Tote','Crossbody Bag','Sunglasses','Silk Scarf','Belt','Clutch','Bucket Hat','Headscarf'],
+				footwear: ['Loafer','Chelsea Boot','Sneaker','Ankle Boot','Mule','Oxford','Sandal','Runner'],
+				sets: ['Matching Set','Linen Set','Coord Set','Two-Piece Set','Soft Set','Tailored Set','Relaxed Set','Studio Set']
+			}
+			const imageIds = ['photo-1521572267360-ee0c2909d518','photo-1496747611176-843222e1e57c','photo-1515886657613-9f3515b0c78f','photo-1483985988355-763728e1935b','photo-1512436991641-6745cdb1723f','photo-1542291026-7eec264c27ff','photo-1517841905240-472988babdf9','photo-1529139574466-a303027c1d8b']
+			return Array.from({length: count}, (_, index) => {
+				const gender = genders[index % genders.length]
+				const category = categories[index % categories.length]
+				const styleName = categoryNames[category][index % categoryNames[category].length]
+				const title = `${adjectives[index % adjectives.length]} ${styleName}`
+				const price = Number((25 + (index % 20) * 6 + (index % 7) * 1.5).toFixed(2))
+				return {
+					id: `item-${index + 1}`,
+					title,
+					gender,
+					category,
+					price,
+					img: `https://images.unsplash.com/${imageIds[index % imageIds.length]}?auto=format&fit=crop&w=800&q=60`
+				}
+			})
+		}
+
+		function getProducts(){return catalog}
+
+		// Cart helpers
+		function cart(){return JSON.parse(localStorage.getItem(CART_KEY) || '[]')}
+		function saveCart(c){localStorage.setItem(CART_KEY, JSON.stringify(c)); renderCart()}
+
+		// Render products
+		function renderProducts(){
+			const out = document.getElementById('products')
+			const q = document.getElementById('search').value.toLowerCase()
+			const g = document.getElementById('genderFilter').value
+			const items = getProducts().filter(p => (g==='all' || p.gender===g) && (p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)))
+			out.innerHTML = items.map(p=>`
+				<div class="card" data-id="${p.id}">
+					<img src="${p.img}" alt="${p.title}">
+					<div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+						<div>
+							<div style="font-weight:600">${p.title}</div>
+							<div class="muted">${p.gender} • ${p.category}</div>
+						</div>
+						<div style="text-align:right">
+							<div class="price">$${p.price.toFixed(2)}</div>
+							<button data-add="${p.id}" style="margin-top:6px">Add</button>
+						</div>
+					</div>
+				</div>
+			`).join('')
+		}
+
+		// Render cart
+		function renderCart(){
+			const list = document.getElementById('cartList')
+			const c = cart()
+			document.getElementById('cartCount').textContent = c.reduce((s,i)=>s+i.qty,0)
+			if(c.length===0){list.innerHTML = '<div class="muted">Cart is empty</div>'; document.getElementById('cartTotal').textContent='0.00'; return}
+			let total=0
+			list.innerHTML = c.map(i=>{
+				const p = getProducts().find(x=>x.id===i.id)
+				total += p.price * i.qty
+				return `<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+					<img src="${p.img}" style="width:52px;height:52px;object-fit:cover;border-radius:6px">
+					<div style="flex:1">
+						<div style="font-weight:600">${p.title}</div>
+						<div class="muted">$${p.price.toFixed(2)} × ${i.qty}</div>
+					</div>
+					<div style="display:flex;flex-direction:column;gap:6px">
+						<button data-inc="${i.id}">+</button>
+						<button data-dec="${i.id}" style="background:#eee;color:#111">-</button>
+					</div>
+				</div>`
+			}).join('')
+			document.getElementById('cartTotal').textContent = total.toFixed(2)
+		}
+
+		// Cart actions
+		function addToCart(id){
+			const c = cart()
+			const found = c.find(x=>x.id===id)
+			if(found) found.qty++
+			else c.push({id,qty:1})
+			saveCart(c)
+		}
+		function changeQty(id,delta){
+			let c = cart()
+			const idx = c.findIndex(x=>x.id===id)
+			if(idx===-1) return
+			c[idx].qty += delta
+			if(c[idx].qty<=0) c.splice(idx,1)
+			saveCart(c)
+		}
+
+		function openCheckout(){
+			const c = cart()
+			if(c.length===0){alert('Cart empty'); return}
+			const panel = document.getElementById('checkoutPanel')
+			panel.style.display = 'block'
+			document.getElementById('custName').focus()
+			document.getElementById('cartPane').scrollIntoView({behavior:'smooth'})
+		}
+
+		function closeCheckout(){
+			document.getElementById('checkoutPanel').style.display = 'none'
+			document.getElementById('checkoutForm').reset()
+		}
+
+		function placeOrder(e){
+			e.preventDefault()
+			const c = cart()
+			if(c.length===0){alert('Cart empty'); return}
+			const formData = new FormData(document.getElementById('checkoutForm'))
+			const order = {
+				id: 'ord_' + Date.now(),
+				name: formData.get('custName') || document.getElementById('custName').value,
+				email: formData.get('custEmail') || document.getElementById('custEmail').value,
+				phone: formData.get('custPhone') || document.getElementById('custPhone').value,
+				address: formData.get('custAddress') || document.getElementById('custAddress').value,
+				cardNumber: formData.get('cardNumber') || document.getElementById('cardNumber').value,
+				cardExpiry: formData.get('cardExpiry') || document.getElementById('cardExpiry').value,
+				cardCvv: formData.get('cardCvv') || document.getElementById('cardCvv').value,
+				items: c,
+				created: new Date().toISOString()
+			}
+			orders.push(order)
+			localStorage.removeItem(CART_KEY)
+			renderCart()
+			closeCheckout()
+			alert(`Order placed for ${order.name}. Thank you for shopping with Verbum & Vox Fashions.`)
+		}
+
+		// Simple user sign-in (no password) - stores username locally
+		function signIn(){
+			const name = prompt('Enter your name/email for quick sign-in')
+			if(!name) return
+			localStorage.setItem('vv_user', name)
+			document.getElementById('userChip').textContent = name
+		}
+
+		// Wire events
+		document.addEventListener('click', e=>{
+			if(e.target.dataset.add) addToCart(e.target.dataset.add)
+			if(e.target.dataset.inc) changeQty(e.target.dataset.inc,1)
+			if(e.target.dataset.dec) changeQty(e.target.dataset.dec,-1)
+			if(e.target.id==='viewCart') document.getElementById('cartPane').scrollIntoView({behavior:'smooth'})
+			if(e.target.id==='checkout') openCheckout()
+			if(e.target.id==='clearCart'){ localStorage.removeItem(CART_KEY); renderCart() }
+			if(e.target.id==='loginBtn') signIn()
+			if(e.target.id==='cancelCheckout') closeCheckout()
+		})
+
+		document.getElementById('checkoutForm').addEventListener('submit', placeOrder)
+		document.getElementById('search').addEventListener('input', renderProducts)
+		document.getElementById('genderFilter').addEventListener('change', renderProducts)
+
+		// Init
+		const u = localStorage.getItem('vv_user'); if(u) document.getElementById('userChip').textContent = u
+		renderProducts(); renderCart()
+	</script>
+</body>
+</html>
