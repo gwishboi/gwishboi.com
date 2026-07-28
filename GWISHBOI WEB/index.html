@@ -186,5 +186,7 @@
   }
 
   function closeModal(){ document.getElementById("checkoutModal").style.display="none"; }
-  function placeOrder
+  function placeOrder(){ alert("Order placed successfully!"); closeModal(); clearCart(); }
+  function continueShopping(){ closeModal(); document.getElementById("shop").scrollIntoView(); }
+</script>
 
