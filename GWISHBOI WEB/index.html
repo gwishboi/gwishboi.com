@@ -302,7 +302,28 @@ button, .btn {
     color: var(--color-text);
     border: 1px solid var(--color-border);
   }
-}   
+}  
+    .color-swatch {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin: 6px;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+  border-color: #1976d2;
+}
+
+.color-swatch.active {
+  border-color: #1976d2;
+  box-shadow: 0 0 6px rgba(25,118,210,0.5);
+}
+    
     #backToTopBtn:hover { background-color: #0b5ed7; }
   </style>
 </head>
@@ -798,25 +819,24 @@ function showOptions(id){
 
   document.getElementById("productOptionsTitle").innerText = selectedProduct.name + " - Choose Color";
 
-  // Render color buttons
+  // Render swatches
   document.getElementById("productOptionsBody").innerHTML = selectedProduct.options.map(opt =>
-    `<button class="btn btn-outline-primary m-1" onclick="selectOption('${opt}')">${opt}</button>`
+    `<div class="color-swatch" style="background-color:${opt.toLowerCase()};" onclick="selectOption('${opt}')"></div>`
   ).join('');
 
   selectedOption = null;
 
-  // Show modal
   new bootstrap.Modal(document.getElementById("productOptionsModal")).show();
 }
 
 function selectOption(opt){
   selectedOption = opt;
-  const buttons = document.querySelectorAll("#productOptionsBody button");
-  buttons.forEach(btn => {
-    if(btn.innerText === opt){
-      btn.classList.add("active");
+  const swatches = document.querySelectorAll("#productOptionsBody .color-swatch");
+  swatches.forEach(swatch => {
+    if(swatch.getAttribute("onclick").includes(opt)){
+      swatch.classList.add("active");
     } else {
-      btn.classList.remove("active");
+      swatch.classList.remove("active");
     }
   });
 }
