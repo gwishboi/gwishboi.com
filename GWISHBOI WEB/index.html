@@ -254,9 +254,55 @@ button, .btn {
   border-radius: 12px;
   padding: 10px 16px;
 }
-    
+ /* Dark Mode (auto-detects user preference) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-surface: #1e1e1e;
+    --color-border: #333;
+    --color-text: #e0e0e0;
 
-    
+    --color-primary: #90caf9;       /* lighter blue for dark mode */
+    --color-primary-dark: #64b5f6;
+
+    --color-secondary: #81c784;     /* lighter green */
+    --color-secondary-dark: #66bb6a;
+
+    --color-accent: #ef9a9a;        /* softer red */
+    --color-accent-dark: #e57373;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+  }
+
+  .navbar.fixed-bottom {
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+  }
+
+  .modal-content {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  form {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  input, textarea {
+    background-color: #2a2a2a;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+  }
+}   
     #backToTopBtn:hover { background-color: #0b5ed7; }
   </style>
 </head>
