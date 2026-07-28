@@ -5,6 +5,7 @@
   <title>VOX ESHOP </title>
   <!-- Bootstrap CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     body {
@@ -22,8 +23,7 @@
       background: rgba(0,0,0,0.3);
       z-index: -1;
     }
-    .card { transition: transform 0.3s, box-shadow 0.3s; }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+  
     #productOptions button.active { background-color: #0d6efd; color: white; }
     .navbar-nav .nav-link.active { color: #0d6efd !important; font-weight: bold; }
     html { scroll-behavior: smooth; }
@@ -32,6 +32,57 @@
       border-radius: 50%; padding: 12px 16px; font-size: 18px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
+    /* Product cards */
+.card {
+  border-radius: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.card img {
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  object-fit: cover;
+}
+
+/* Buttons */
+.btn-primary {
+  border-radius: 12px;
+  background-color: #1976d2; /* FlutterFlow blue */
+  border: none;
+}
+.btn-primary:hover {
+  background-color: #1565c0;
+}
+
+/* Brand logos row */
+.rounded-circle {
+  border-radius: 50% !important;
+  object-fit: cover;
+}
+.border {
+  border: 2px solid #ddd;
+}
+.d-flex img {
+  transition: transform 0.2s ease;
+}
+.d-flex img:hover {
+  transform: scale(1.1);
+}
+
+/* Bottom navigation bar */
+.navbar.fixed-bottom {
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+}
+.navbar .nav-link {
+  font-size: 1.4rem;
+  color: #555;
+}
+.navbar .nav-link:hover {
+  color: #1976d2;
+}
     #backToTopBtn:hover { background-color: #0b5ed7; }
   </style>
 </head>
@@ -84,14 +135,302 @@
 <section id="shop" class="py-5">
   <div class="container">
     <h2 class="text-center mb-4">Shop</h2>
-    <div class="row mb-4">
-      <div class="col-md-6 offset-md-3">
-        <input type="text" id="searchBar" class="form-control" placeholder="Search products...">
+
+    <!-- Popular Brands -->
+    <h4 class="mb-3">Popular Brands</h4>
+    <div class="d-flex overflow-auto mb-4">
+      <div class="text-center me-3">
+        <img src="https://images.pexels.com/photos/374777/pexels-photo-374777.jpeg?auto=compress&cs=tinysrgb&w=60"
+             class="rounded-circle border" width="60" height="60" alt="Sony logo">
+        <p class="small">Sony</p>
+      </div>
+      <div class="text-center me-3">
+        <img src="https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=60"
+             class="rounded-circle border" width="60" height="60" alt="Apple logo">
+        <p class="small">Apple</p>
+      </div>
+      <div class="text-center me-3">
+        <img src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=60"
+             class="rounded-circle border" width="60" height="60" alt="Nike logo">
+        <p class="small">Nike</p>
+      </div>
+      <div class="text-center me-3">
+        <img src="https://images.pexels.com/photos/157888/pexels-photo-157888.jpeg?auto=compress&cs=tinysrgb&w=60"
+             class="rounded-circle border" width="60" height="60" alt="Ray-Ban logo">
+        <p class="small">Ray‑Ban</p>
+      </div>
+      <div class="text-center me-3">
+        <img src="https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg?auto=compress&cs=tinysrgb&w=60"
+             class="rounded-circle border" width="60" height="60" alt="IKEA logo">
+        <p class="small">IKEA</p>
       </div>
     </div>
-    <div class="row" id="product-grid"></div>
+
+    <!-- Fashion & Accessories -->
+    <h4 class="mb-3">Fashion & Accessories</h4>
+    <div class="row">
+      <!-- Running Sneakers -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Running Sneakers</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$90</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(5)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Leather Wallet -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/322207/pexels-photo-322207.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Leather Wallet</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$45</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(6)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Backpack -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/1028225/pexels-photo-1028225.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Backpack</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$70</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(16)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Sunglasses -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/157888/pexels-photo-157888.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Sunglasses</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$35</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(8)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Electronics -->
+    <h4 class="mb-3">Electronics</h4>
+    <div class="row">
+      <!-- Wireless Headphones -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/374777/pexels-photo-374777.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Wireless Headphones</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$50</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(1)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Smartwatch -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Smartwatch</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$120</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(2)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Laptop -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Laptop</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$800</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(3)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- DSLR Camera -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/212372/pexels-photo-212372.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">DSLR Camera</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$650</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(4)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Bluetooth Speaker -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/63703/pexels-photo-63703.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Bluetooth Speaker</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$55</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(13)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Gaming Mouse -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/394565/pexels-photo-394565.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Gaming Mouse</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$45</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(18)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Smart TV -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Smart TV</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$900</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(19)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Wireless Keyboard -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Wireless Keyboard</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$65</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(20)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Home & Living -->
+    <h4 class="mb-3">Home & Living</h4>
+    <div class="row">
+      <!-- Coffee Maker -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/405238/pexels-photo-405238.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Coffee Maker</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$110</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(7)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Wooden Chair -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Wooden Chair</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$60</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(9)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Table Lamp -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/1125133/pexels-photo-1125133.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Table Lamp</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$40</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(10)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Ceramic Coffee Mug -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/585752/pexels-photo-585752.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Ceramic Coffee Mug</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$15</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(11)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Cutlery Set -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/1095550/pexels-photo-1095550.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Cutlery Set</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$35</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(12)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Office Desk -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/245032/pexels-photo-245032.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Office Desk</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$250</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(14)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Wall Clock -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/707676/pexels-photo-707676.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Wall Clock</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$45</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(15)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+      <!-- Desk Plant -->
+      <div class="col-6 mb-4">
+        <div class="card h-100 shadow-sm rounded-4">
+          <img src="https://images.pexels.com/photos/3076899/pexels-photo-3076899.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <div class="card-body">
+            <h6 class="card-title">Desk Plant</h6>
+            <p>⭐⭐⭐⭐☆</p>
+            <p class="fw-bold">$25</p>
+            <button class="btn btn-sm btn-primary" onclick="addToCart(17)"><i class="bi bi-cart"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<!-- Bottom Navigation -->
+<nav class="navbar fixed-bottom bg-light border-top">
+  <div class="container d-flex justify-content-around">
+    <a href="#cover" class="nav-link"><i class="bi bi-house"></i></a>
+    <a href="#favorites" class="nav-link"><i class="bi bi-heart"></i></a>
+    <a href="#cart" class="nav-link"><i class="bi bi-cart"></i></a>
+  </div>
+</nav>
 
 <!-- Cart -->
 <section id="cart" class="py-5 bg-white">
@@ -281,6 +620,13 @@ function updateCart(){
   document.getElementById("subtotal").innerText="Subtotal: $"+subtotal;
   document.getElementById("discount").innerText="Discount: $"+discountValue;
   document.getElementById("total").innerText="Total: $"+(subtotal-discountValue);
+}
+  function addToCart(id){
+  const product = products.find(p => p.id === id);
+  if(!product){ alert("Product not found"); return; }
+  const option = product.options[0]; // default option
+  cart.push({...product, option});
+  updateCart(); // refresh cart display
 }
 
 // Remove item
