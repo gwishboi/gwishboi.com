@@ -31,6 +31,10 @@
       transform: translateY(-5px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
+    #productOptions button.active {
+      background-color: #0d6efd;
+      color: white;
+    }
   </style>
 </head>
 <body class="bg-light">
@@ -162,7 +166,7 @@ function changeMessage(){
 }
 setInterval(changeMessage, 3000);
 
-// Product list with options for all 20 items
+// Product list (20 items with options)
 const products = [
   {id:1,name:"Wireless Headphones",price:50,img:"https://images.pexels.com/photos/374777/pexels-photo-374777.jpeg?auto=compress&cs=tinysrgb&w=400",options:["Black","White","Red"]},
   {id:2,name:"Smartwatch",price:120,img:"https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=400",options:["Silver","Black","Gold"]},
@@ -188,6 +192,7 @@ const products = [
 
 let cart = [];
 let discountValue = 0;
+let selectedOption = null;
 
 const grid = document.getElementById("product-grid");
 grid.innerHTML = products.map(p => `
@@ -207,14 +212,30 @@ function showProduct(id){
   document.getElementById("productModalTitle").innerText = product.name;
   document.getElementById("productModalImg").src = product.img;
   document.getElementById("productModalPrice").innerText = "Price: $" + product.price;
+  selectedOption = null;
   document.getElementById("productOptions").innerHTML = product.options.map(opt =>
-    `<button class="btn btn-outline-primary">${opt}</button>`
+    `<button class="btn btn-outline-primary" onclick="selectOption('${opt}')">${opt}</button>`
   ).join('');
-  document.getElementById("addToCartBtn").onclick = () => addToCart(product.id, product.name, product.price, product.img);
+  document.getElementById("addToCartBtn").onclick = () => {
+    let nameWithOption = selectedOption ? `${product.name} (${selectedOption})` : product.name;
+    addToCart(product.id, nameWithOption, product.price, product.img);
+  };
   new bootstrap.Modal(document.getElementById("productModal")).show();
 }
 
-// Cart functions (same as before)...
+function selectOption(opt){
+  selectedOption = opt;
+  const buttons = document.querySelectorAll("#productOptions button");
+  buttons.forEach(btn => {
+    if(btn.innerText === opt){
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+  });
+}
+
+// Cart functions
 function updateCart(){
   const list = document.getElementById("cart-items");
   list.innerHTML="";
@@ -237,7 +258,7 @@ function updateCart(){
 }
 
 function addToCart(id,name,price,img){
-  let item = cart.find(p=>p.id===id);
+  let item = cart.find(p=>p.id===id && p.name===name);
   if(item){ item.qty++; }
   else { cart.push({id,name,price,qty:1,img}); }
   updateCart();
@@ -252,6 +273,7 @@ function changeQty(id,delta){
 }
 
 function applyCoupon(){
+  if(cart.length===0){ alert("Cart is empty, coupon not applied."); return; }
   let code = document.getElementById("coupon").value.trim().toUpperCase();
   let subtotal = cart.reduce((sum,item)=>sum+item.price*item.qty,0);
   if(code==="SAVE10"){ discountValue = 10; alert("Coupon applied: $10 off!"); }
@@ -272,10 +294,10 @@ function checkout(){
       ${item.name} x ${item.qty} = $${item.price*item.qty}</li>`;
   });
   summaryHTML += "</ul>";
-  summaryHTML += <p>Subtotal: $${subtotal}</p>;
-  if(discountValue>0){ summaryHTML += <p>Discount: -$${discountValue}</p>; }
+  summaryHTML += `<p>Subtotal: $${subtotal}</p>`;
+  if(discountValue>0){ summaryHTML += `<p>Discount: -$${discountValue}</p>`; }
   let total = subtotal - discountValue;
-  summaryHTML += <p><strong>Total: $${(total<0?0:total)}</strong></p>;
+  summaryHTML += `<p><strong>Total: $${(total<0?0:total)}</strong></p>`;
   document.getElementById("order-summary").innerHTML = summaryHTML;
   new bootstrap.Modal(document.getElementById("checkoutModal")).show();
 }
