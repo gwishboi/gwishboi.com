@@ -100,6 +100,20 @@
 </div>
 
 <script>
+// Rotating welcome message
+const messages = [
+  "Welcome to our store",
+  "Discover amazing deals today",
+  "Your trusted shopping partner",
+  "Shop smart, live better",
+  "Exclusive offers just for you"
+];
+let index = 0;
+function changeMessage(){
+  document.getElementById("welcome-message").innerText = messages[index];
+  index = (index + 1) % messages.length;
+}
+setInterval(changeMessage, 3000);  
 const products = [
   {id:1,name:"Wireless Headphones",price:50,img:"https://images.pexels.com/photos/374777/pexels-photo-374777.jpeg?auto=compress&cs=tinysrgb&w=400"},
   {id:2,name:"Smartwatch",price:120,img:"https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=400"},
