@@ -215,14 +215,72 @@ function showProduct(id){
 }
 
 // Cart functions (same as before)...
-function updateCart(){ /* ... */ }
-function addToCart(id,name,price,img){ /* ... */ }
-function removeItem(id){ /* ... */ }
-function changeQty(id,delta){ /* ... */ }
-function applyCoupon(){ /* ... */ }
-function clearCart(){ /* ... */ }
-function checkout(){ /* ... */ }
-function placeOrder(){ /* ... */ }
+function updateCart(){
+  const list = document.getElementById("cart-items");
+  list.innerHTML="";
+  let subtotal=0;
+  cart.forEach(item=>{
+    subtotal += item.price*item.qty;
+    list.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center">
+      ${item.name} x ${item.qty} = $${item.price*item.qty}
+      <div>
+        <button class="btn btn-sm btn-outline-secondary" onclick="changeQty(${item.id},1)">+</button>
+        <button class="btn btn-sm btn-outline-secondary" onclick="changeQty(${item.id},-1)">-</button>
+        <button class="btn btn-sm btn-outline-danger" onclick="removeItem(${item.id})">Remove</button>
+      </div>
+    </li>`;
+  });
+  document.getElementById("subtotal").innerText="Subtotal: $"+subtotal;
+  let total = subtotal - discountValue;
+  document.getElementById("discount").innerText = discountValue>0 ? "Discount: -$"+discountValue : "";
+  document.getElementById("total").innerText="Total: $"+(total<0?0:total);
+}
+
+function addToCart(id,name,price,img){
+  let item = cart.find(p=>p.id===id);
+  if(item){ item.qty++; }
+  else { cart.push({id,name,price,qty:1,img}); }
+  updateCart();
+}
+
+function removeItem(id){ cart = cart.filter(p=>p.id!==id); updateCart(); }
+
+function changeQty(id,delta){
+  let item = cart.find(p=>p.id===id);
+  if(item){ item.qty += delta; if(item.qty<=0){ removeItem(id); } }
+  updateCart();
+}
+
+function applyCoupon(){
+  let code = document.getElementById("coupon").value.trim().toUpperCase();
+  let subtotal = cart.reduce((sum,item)=>sum+item.price*item.qty,0);
+  if(code==="SAVE10"){ discountValue = 10; alert("Coupon applied: $10 off!"); }
+  else if(code==="HALFPRICE"){ discountValue = subtotal/2; alert("Coupon applied: 50% off!"); }
+  else { discountValue = 0; alert("Invalid coupon code."); }
+  updateCart();
+}
+
+function clearCart(){ cart=[]; discountValue=0; updateCart(); alert("Cart cleared!"); }
+
+function checkout(){
+  if(cart.length===0){ alert("Your cart is empty!"); return; }
+  let summaryHTML = "<ul class='list-group'>";
+  let subtotal = 0;
+  cart.forEach(item=>{
+    subtotal += item.price*item.qty;
+    summaryHTML += `<li class="list-group-item"><img src="${item.img}" alt="${item.name}" width="50" class="me-2"> 
+      ${item.name} x ${item.qty} = $${item.price*item.qty}</li>`;
+  });
+  summaryHTML += "</ul>";
+  summaryHTML += <p>Subtotal: $${subtotal}</p>;
+  if(discountValue>0){ summaryHTML += <p>Discount: -$${discountValue}</p>; }
+  let total = subtotal - discountValue;
+  summaryHTML += <p><strong>Total: $${(total<0?0:total)}</strong></p>;
+  document.getElementById("order-summary").innerHTML = summaryHTML;
+  new bootstrap.Modal(document.getElementById("checkoutModal")).show();
+}
+
+function placeOrder(){ alert("Order placed successfully!"); clearCart(); }
 </script>
 </body>
 </html>
