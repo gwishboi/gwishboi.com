@@ -917,9 +917,10 @@ const products = [
   {id:19,name:"Smart TV",price:900,img:"https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&w=400",options:["42-inch","55-inch","65-inch"]},
   {id:20,name:"Wireless Keyboard",price:65,img:"https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=400",options:["Black","White"]}
 ];
-   const grid = document.getElementById("product-grid");
+// ✅ Product grid container
+  const grid = document.getElementById("product-grid");
 
-  // Render products
+  // ✅ Function to render products
   function renderProducts(list){
     grid.innerHTML = list.map(p => `
       <div class="col-6 col-md-4 mb-4">
@@ -940,6 +941,20 @@ const products = [
       </div>
     `).join('');
   }
+
+  // ✅ Show all products initially
+  renderProducts(products);
+
+  // ✅ Search filter logic
+  document.getElementById("searchBar").addEventListener("input", function(){
+    const query = this.value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+    renderProducts(filtered);
+  });
+  
+   const grid = document.getElementById("product-grid");
+
+
 
   // Show all products initially
   renderProducts(products);
