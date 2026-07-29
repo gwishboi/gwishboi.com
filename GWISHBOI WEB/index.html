@@ -332,7 +332,7 @@ button, .btn {
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="#">VOX ELECTRONIC SHOP</a>
+    <a class="navbar-brand fw-bold" href="#">VOX ecommerce</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -398,35 +398,33 @@ button, .btn {
 <section id="shop" class="py-5">
   <div class="container">
     <h2 class="text-center mb-4">Shop</h2>
-     <!-- 🔍 Search bar -->
-    <div class="row mb-4">
-      <div class="col-md-6 offset-md-3">
-        <input type="text" id="searchBar" class="form-control" placeholder="Search products...">
-      </div>
-    </div>
 
     <!-- Popular Brands -->
     <h4 class="mb-3">Popular Brands</h4>
     <div class="d-flex overflow-auto mb-4">
       <div class="text-center me-3">
         <img src="https://images.pexels.com/photos/374777/pexels-photo-374777.jpeg?auto=compress&cs=tinysrgb&w=60"
-             class="rounded-circle border" width="65" height="65" alt="Sony logo">
+             class="rounded-circle border" width="60" height="60" alt="Sony logo">
         <p class="small">Sony</p>
       </div>
       <div class="text-center me-3">
         <img src="https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&cs=tinysrgb&w=60"
-             class="rounded-circle border" width="65" height="65" alt="Apple logo">
+             class="rounded-circle border" width="60" height="60" alt="Apple logo">
         <p class="small">Apple</p>
       </div>
       <div class="text-center me-3">
         <img src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=60"
-             class="rounded-circle border" width="65" height="65" alt="Nike logo">
+             class="rounded-circle border" width="60" height="60" alt="Nike logo">
         <p class="small">Nike</p>
       </div>
-     
+      <div class="text-center me-3">
+        <img src="https://images.pexels.com/photos/157888/pexels-photo-157888.jpeg?auto=compress&cs=tinysrgb&w=60"
+             class="rounded-circle border" width="60" height="60" alt="Ray-Ban logo">
+        <p class="small">Ray‑Ban</p>
+      </div>
       <div class="text-center me-3">
         <img src="https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg?auto=compress&cs=tinysrgb&w=60"
-             class="rounded-circle border" width="65" height="65" alt="IKEA logo">
+             class="rounded-circle border" width="60" height="60" alt="IKEA logo">
         <p class="small">IKEA</p>
       </div>
     </div>
@@ -485,9 +483,9 @@ button, .btn {
       <!-- Sunglasses -->
       <div class="col-6 mb-4">
         <div class="card h-100 shadow-sm rounded-4">
-          <img src="https://images.pexels.com/photos/36398869/pexels-photo-36398869.jpeg/?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
+          <img src="https://images.pexels.com/photos/157888/pexels-photo-157888.jpeg?auto=compress&cs=tinysrgb&w=400" class="card-img-top rounded-top-4">
           <div class="card-body">
-            <h6 class="card-title">PlayStation 5 </h6>
+            <h6 class="card-title">Sunglasses</h6>
             <p>⭐⭐⭐⭐☆</p>
             <p class="fw-bold">$35</p>
             <button class="btn btn-sm btn-primary" onclick="showOptions(8)"><i class="bi bi-cart"></i></button>
@@ -917,92 +915,7 @@ const products = [
   {id:19,name:"Smart TV",price:900,img:"https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&w=400",options:["42-inch","55-inch","65-inch"]},
   {id:20,name:"Wireless Keyboard",price:65,img:"https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=400",options:["Black","White"]}
 ];
-// ✅ Cart storage
-let cart = [];
-let selectedProduct = null;
-let selectedOption = null;
-
-// ✅ Render products
-function renderProducts(list){
-  const grid = document.getElementById("product-grid");
-  grid.innerHTML = list.map(p => `
-    <div class="col-6 col-md-4 mb-4">
-      <div class="card h-100">
-        <img src="${p.img}" class="card-img-top" alt="${p.name}">
-        <div class="card-body">
-          <h6 class="card-title">${p.name}</h6>
-          <p>$${p.price}</p>
-          <div class="text-warning">★★★★☆</div>
-          <button class="btn btn-sm btn-primary" onclick="showOptions(${p.id})">
-            <i class="bi bi-cart"></i>
-          </button>
-          <a href="https://wa.me/263779031059?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}"
-             class="btn btn-success btn-sm mt-2" target="_blank">
-            <i class="bi bi-whatsapp"></i> Order via WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// ✅ Initial render
-renderProducts(products);
-
-// ✅ Search filter
-document.getElementById("searchBar").addEventListener("input", function(){
-  const query = this.value.toLowerCase();
-  const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-  renderProducts(filtered);
-});
-
-// ✅ Cart logic
-function showOptions(id){
-  selectedProduct = products.find(p => p.id === id);
-  if(!selectedProduct){ alert("Product not found"); return; }
-
-  // For now, just add first option automatically
-  // Later you can open a modal with swatches
-  addToCart(selectedProduct.id, selectedProduct.options[0].name);
-}
-
-function addToCart(id, option){
-  const product = products.find(p => p.id === id);
-  if(!product){ alert("Product not found"); return; }
-
-  cart.push({...product, option});
-  updateCart();
-}
-
-function updateCart(){
-  console.log("Cart:", cart); 
-  // Replace with your cart modal update logic
-}
-
-  // ✅ Show all products initially
-  renderProducts(products);
-
-  // ✅ Search filter logic
-  document.getElementById("searchBar").addEventListener("input", function(){
-    const query = this.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-    renderProducts(filtered);
-  });
   
-   const grid = document.getElementById("product-grid");
-
-
-
-  // Show all products initially
-  renderProducts(products);
-
-  // Search filter
-  document.getElementById("searchBar").addEventListener("input", function(){
-    const query = this.value.toLowerCase();
-    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-    renderProducts(filtered);
-  });
-
 // --- Cart and product rendering ---
 //let cart = [];
 //let discountValue = 0;
@@ -1237,9 +1150,6 @@ window.onscroll = function() {
     btn.style.display = "none";
   }
 };
-// Search filter
-
-  
 function scrollToTop() {
   window.scrollTo({
     top: 0,
@@ -1248,4 +1158,4 @@ function scrollToTop() {
 }
 </script>
 </body>
-</html> 
+</html>       
