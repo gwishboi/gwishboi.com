@@ -1152,19 +1152,11 @@ window.onscroll = function() {
     btn.style.display = "none";
   }
 };
- // Search filter
-    document.getElementById("searchBar").addEventListener("input", function(){
-      const query = this.value.toLowerCase();
-      const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-      renderProducts(filtered);
-    });
-  
-  
 // Search filter
     document.getElementById("searchBar").addEventListener("input", function(){
   const query = this.value.toLowerCase();
   const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-
+renderProducts(filtered);
   document.getElementById("product-grid").innerHTML = filtered.map(p => `
     <div class="col-6 col-md-4 mb-4">
       <div class="card h-100">
