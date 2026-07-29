@@ -917,7 +917,39 @@ const products = [
   {id:19,name:"Smart TV",price:900,img:"https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&w=400",options:["42-inch","55-inch","65-inch"]},
   {id:20,name:"Wireless Keyboard",price:65,img:"https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=400",options:["Black","White"]}
 ];
-  
+   const grid = document.getElementById("product-grid");
+
+  // Render products
+  function renderProducts(list){
+    grid.innerHTML = list.map(p => `
+      <div class="col-6 col-md-4 mb-4">
+        <div class="card h-100">
+          <img src="${p.img}" class="card-img-top" alt="${p.name}">
+          <div class="card-body">
+            <h6 class="card-title">${p.name}</h6>
+            <p>$${p.price}</p>
+            <button class="btn btn-sm btn-primary" onclick="showOptions(${p.id})">
+              <i class="bi bi-cart"></i>
+            </button>
+            <a href="https://wa.me/263779031059?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}"
+               class="btn btn-success btn-sm mt-2" target="_blank">
+              <i class="bi bi-whatsapp"></i> Order via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Show all products initially
+  renderProducts(products);
+
+  // Search filter
+  document.getElementById("searchBar").addEventListener("input", function(){
+    const query = this.value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+    renderProducts(filtered);
+  });
 // --- Cart and product rendering ---
 //let cart = [];
 //let discountValue = 0;
@@ -1153,30 +1185,7 @@ window.onscroll = function() {
   }
 };
 // Search filter
-    document.getElementById("searchBar").addEventListener("input", function(){
-  const query = this.value.toLowerCase();
-  const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-renderProducts(filtered);
-  document.getElementById("product-grid").innerHTML = filtered.map(p => `
-    <div class="col-6 col-md-4 mb-4">
-      <div class="card h-100">
-        <img src="${p.img}" class="card-img-top" alt="${p.name}">
-        <div class="card-body">
-          <h6 class="card-title">${p.name}</h6>
-          <p>$${p.price}</p>
-          <div class="text-warning">★★★★☆</div>
-          <button class="btn btn-sm btn-primary" onclick="showOptions(${p.id})">
-            <i class="bi bi-cart"></i>
-          </button>
-          <a href="https://wa.me/263779031059?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}"
-             class="btn btn-success btn-sm mt-2" target="_blank">
-            <i class="bi bi-whatsapp"></i> Order via WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-});
+
   
 function scrollToTop() {
   window.scrollTo({
