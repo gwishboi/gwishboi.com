@@ -950,30 +950,7 @@ const products = [
     const filtered = products.filter(p => p.name.toLowerCase().includes(query));
     renderProducts(filtered);
   });
-      document.getElementById("searchBar").addEventListener("input", function(){
-  const query = this.value.toLowerCase();
-  const filtered = products.filter(p => p.name.toLowerCase().includes(query));
-renderProducts(filtered);
-  document.getElementById("product-grid").innerHTML = filtered.map(p => `
-    <div class="col-6 col-md-4 mb-4">
-      <div class="card h-100">
-        <img src="${p.img}" class="card-img-top" alt="${p.name}">
-        <div class="card-body">
-          <h6 class="card-title">${p.name}</h6>
-          <p>$${p.price}</p>
-          <div class="text-warning">★★★★☆</div>
-          <button class="btn btn-sm btn-primary" onclick="showOptions(${p.id})">
-            <i class="bi bi-cart"></i>
-          </button>
-          <a href="https://wa.me/263779031059?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}"
-             class="btn btn-success btn-sm mt-2" target="_blank">
-            <i class="bi bi-whatsapp"></i> Order via WhatsApp
-          </a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-});
+
 // --- Cart and product rendering ---
 //let cart = [];
 //let discountValue = 0;
