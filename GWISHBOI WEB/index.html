@@ -917,30 +917,67 @@ const products = [
   {id:19,name:"Smart TV",price:900,img:"https://images.pexels.com/photos/572056/pexels-photo-572056.jpeg?auto=compress&cs=tinysrgb&w=400",options:["42-inch","55-inch","65-inch"]},
   {id:20,name:"Wireless Keyboard",price:65,img:"https://images.pexels.com/photos/3825581/pexels-photo-3825581.jpeg?auto=compress&cs=tinysrgb&w=400",options:["Black","White"]}
 ];
-// ✅ Product grid container
-  const grid = document.getElementById("product-grid");
+// ✅ Cart storage
+let cart = [];
+let selectedProduct = null;
+let selectedOption = null;
 
-  // ✅ Function to render products
-  function renderProducts(list){
-    grid.innerHTML = list.map(p => `
-      <div class="col-6 col-md-4 mb-4">
-        <div class="card h-100">
-          <img src="${p.img}" class="card-img-top" alt="${p.name}">
-          <div class="card-body">
-            <h6 class="card-title">${p.name}</h6>
-            <p>$${p.price}</p>
-            <button class="btn btn-sm btn-primary" onclick="showOptions(${p.id})">
-              <i class="bi bi-cart"></i>
-            </button>
-            <a href="https://wa.me/263779031059?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}"
-               class="btn btn-success btn-sm mt-2" target="_blank">
-              <i class="bi bi-whatsapp"></i> Order via WhatsApp
-            </a>
-          </div>
+// ✅ Render products
+function renderProducts(list){
+  const grid = document.getElementById("product-grid");
+  grid.innerHTML = list.map(p => `
+    <div class="col-6 col-md-4 mb-4">
+      <div class="card h-100">
+        <img src="${p.img}" class="card-img-top" alt="${p.name}">
+        <div class="card-body">
+          <h6 class="card-title">${p.name}</h6>
+          <p>$${p.price}</p>
+          <div class="text-warning">★★★★☆</div>
+          <button class="btn btn-sm btn-primary" onclick="showOptions(${p.id})">
+            <i class="bi bi-cart"></i>
+          </button>
+          <a href="https://wa.me/263779031059?text=I%20want%20to%20order%20${encodeURIComponent(p.name)}"
+             class="btn btn-success btn-sm mt-2" target="_blank">
+            <i class="bi bi-whatsapp"></i> Order via WhatsApp
+          </a>
         </div>
       </div>
-    `).join('');
-  }
+    </div>
+  `).join('');
+}
+
+// ✅ Initial render
+renderProducts(products);
+
+// ✅ Search filter
+document.getElementById("searchBar").addEventListener("input", function(){
+  const query = this.value.toLowerCase();
+  const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+  renderProducts(filtered);
+});
+
+// ✅ Cart logic
+function showOptions(id){
+  selectedProduct = products.find(p => p.id === id);
+  if(!selectedProduct){ alert("Product not found"); return; }
+
+  // For now, just add first option automatically
+  // Later you can open a modal with swatches
+  addToCart(selectedProduct.id, selectedProduct.options[0].name);
+}
+
+function addToCart(id, option){
+  const product = products.find(p => p.id === id);
+  if(!product){ alert("Product not found"); return; }
+
+  cart.push({...product, option});
+  updateCart();
+}
+
+function updateCart(){
+  console.log("Cart:", cart); 
+  // Replace with your cart modal update logic
+}
 
   // ✅ Show all products initially
   renderProducts(products);
